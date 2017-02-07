@@ -1,5 +1,7 @@
 package com.rwtema.funkylocomotion.blocks;
 
+import java.lang.ref.WeakReference;
+import javax.annotation.Nonnull;
 import com.rwtema.funkylocomotion.movers.MoverEventHandler;
 import com.rwtema.funkylocomotion.movers.MovingTileRegistry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -7,9 +9,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.relauncher.Side;
-
-import javax.annotation.Nonnull;
-import java.lang.ref.WeakReference;
 
 public class TileMovingServer extends TileMovingBase {
 
@@ -26,25 +25,7 @@ public class TileMovingServer extends TileMovingBase {
 	@Override
 	@Nonnull
 	public NBTTagCompound getUpdateTag() {
-		if (desc == null)
-			return super.getUpdateTag();
-
-		super.writeToNBT(desc);
-
-		desc.setInteger("Time", time);
-		desc.setInteger("MaxTime", maxTime);
-		desc.setByte("Dir", (byte) dir);
-
-		if (lightLevel > 0)
-			desc.setByte("Light", (byte) lightLevel);
-		if (lightOpacity > 0)
-			desc.setShort("Opacity", (short) lightOpacity);
-
-		if (collisions.length > 0) {
-			desc.setTag("Collisions", TagsAxis(collisions));
-		}
-
-		return desc;
+		return this.writeToNBT(new NBTTagCompound());
 	}
 
 	@Override

@@ -112,8 +112,10 @@ public abstract class TileMovingBase extends TileEntity implements ITickable {
 	@Nonnull
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		super.writeToNBT(tag);
-		tag.setTag("BlockTag", block);
-		tag.setTag("DescTag", desc);
+		if (block != null)
+			tag.setTag("BlockTag", block);
+		if (desc != null)
+			tag.setTag("DescTag", desc);
 		tag.setInteger("Time", time);
 		tag.setInteger("MaxTime", maxTime);
 		tag.setByte("Dir", (byte) dir);
