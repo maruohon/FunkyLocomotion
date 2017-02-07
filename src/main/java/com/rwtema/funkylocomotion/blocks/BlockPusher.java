@@ -56,6 +56,11 @@ public class BlockPusher extends BlockFLMultiState implements ISlipperyBlock {
 	}
 
 	@Override
+	public int damageDropped(IBlockState state) {
+		return state.getValue(PUSH_PULL_TYPE) == PushPullType.PUSHER ? 0 : 1;
+	}
+
+	@Override
 	public void getSubBlocks(@Nonnull Item itemIn, CreativeTabs tab, List<ItemStack> list) {
 		list.add(new ItemStack(itemIn, 1, 0));
 		list.add(new ItemStack(itemIn, 1, 1));
