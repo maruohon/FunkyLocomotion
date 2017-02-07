@@ -113,6 +113,7 @@ public class BlockStickyFrame extends BlockFrame {
 		return getRawMeta(state) & 15;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		ItemStack item = playerIn.getHeldItem(hand);

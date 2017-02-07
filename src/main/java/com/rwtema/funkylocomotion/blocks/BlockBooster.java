@@ -50,8 +50,8 @@ public class BlockBooster extends Block {
 
 	@Nonnull
 	@Override
-	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-		IBlockState state = super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer);
+	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, ItemStack stack) {
+		IBlockState state = super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer, stack);
 		EnumFacing opposite = facing.getOpposite();
 		if (worldIn.getTileEntity(pos.offset(opposite)) instanceof IMover) {
 			return state.withProperty(BlockDirectional.FACING, opposite);

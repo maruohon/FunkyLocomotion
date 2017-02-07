@@ -36,7 +36,6 @@ public class BlockMoving extends Block {
 		instance = this;
 	}
 
-	@SuppressWarnings("unused")
 	public static boolean _Immoveable() {
 		return true;
 	}
@@ -93,7 +92,7 @@ public class BlockMoving extends Block {
 	}
 
 	@Override
-	public boolean isVisuallyOpaque() {
+	public boolean causesSuffocation() {
 		return false;
 	}
 
@@ -112,7 +111,6 @@ public class BlockMoving extends Block {
 		return false;
 	}
 
-	@SuppressWarnings("ConstantConditions")
 	@Nonnull
 	@Override
 	public ItemStack getPickBlock(@Nonnull IBlockState state, RayTraceResult target, @Nonnull World world, @Nonnull BlockPos pos, EntityPlayer player) {
@@ -184,6 +182,7 @@ public class BlockMoving extends Block {
 			fakeWorld.offset = mover.offset(true);
 			fakeWorld.dir_id = mover.dir;
 			fakeWorld.dir = mover.getDir();
+			@SuppressWarnings("deprecation")
 			IBlockState state = mover.block.getStateFromMeta(mover.meta);
 			mover.block.randomDisplayTick(state, fakeWorld, pos, rand);
 			fakeWorld.offset = 0;

@@ -18,6 +18,7 @@ public class BlockFrame extends Block implements IStickyBlock {
 		this.setHardness(1);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean shouldSideBeRendered(IBlockState blockState, @Nonnull IBlockAccess blockAccess, @Nonnull BlockPos pos, EnumFacing side) {
 		return super.shouldSideBeRendered(blockState, blockAccess, pos, side) && !(blockAccess.getBlockState(pos.offset(side)).getBlock() instanceof BlockFrame);
@@ -44,7 +45,7 @@ public class BlockFrame extends Block implements IStickyBlock {
 	}
 
 	@Override
-	public boolean isVisuallyOpaque() {
+	public boolean causesSuffocation() {
 		return false;
 	}
 

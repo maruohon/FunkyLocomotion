@@ -21,6 +21,7 @@ import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 import javax.annotation.Nullable;
 
 public class BlockHelper {
+	@SuppressWarnings("deprecation")
 	public static boolean silentSetBlock(Chunk chunk, BlockPos pos, Block block, int meta) {
 		int dx = pos.getX() & 15;
 		int dz = pos.getZ() & 15;
@@ -46,11 +47,11 @@ public class BlockHelper {
 					return false;
 				}
 
-				extendedblockstorage = chunk.getBlockStorageArray()[y >> 4] = new ExtendedBlockStorage(y >> 4 << 4, !chunk.worldObj.provider.getHasNoSky());
+				extendedblockstorage = chunk.getBlockStorageArray()[y >> 4] = new ExtendedBlockStorage(y >> 4 << 4, !chunk.getWorld().provider.hasNoSky());
 			}
 
 			extendedblockstorage.set(dx, y & 15, dz, block.getStateFromMeta(meta));
-			chunk.isModified = true;
+			chunk.setModified(true);
 			return true;
 		}
 
@@ -70,7 +71,7 @@ public class BlockHelper {
 			chunk.precipitationHeightMap[i1] = -999;
 		}
 
-		int j1 = chunk.heightMap[i1];
+		int j1 = chunk.getHeightMap()[i1];
 		boolean flag = pos.getY() >= j1;
 		IBlockState newState = chunk.getBlockState(pos.getX() & 15, pos.getY(), pos.getZ() & 15);
 		Block newBlock = newState.getBlock();

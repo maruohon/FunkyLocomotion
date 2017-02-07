@@ -41,7 +41,6 @@ public abstract class TileMovingBase extends TileEntity implements ITickable {
 		this.side = side;
 	}
 
-	@SuppressWarnings("unused")
 	public static boolean _Immovable() {
 		return true;
 	}
@@ -149,13 +148,12 @@ public abstract class TileMovingBase extends TileEntity implements ITickable {
 		return new Vec3d(dir.getFrontOffsetX() * d, dir.getFrontOffsetY() * d, dir.getFrontOffsetZ() * d);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void update() {
 		if (maxTime == 0)
 			return;
 
-		if (worldObj.isRemote) {
+		if (getWorld().isRemote) {
 			time = time + 1 - 1;
 		}
 
@@ -166,7 +164,7 @@ public abstract class TileMovingBase extends TileEntity implements ITickable {
 		time++;
 
 		for (AxisAlignedBB bb : getTransformedColisions()) {
-			List<Entity> entities = worldObj.getEntitiesWithinAABB(Entity.class, bb.expand(0, 0.1, 0));
+			List<Entity> entities = getWorld().getEntitiesWithinAABB(Entity.class, bb.expand(0, 0.1, 0));
 			for (Entity entity : entities) {
 				entityList.add(entity);
 			}
@@ -209,7 +207,7 @@ public abstract class TileMovingBase extends TileEntity implements ITickable {
 
 		EnumFacing dir = this.getDir();
 		if (dir != null) {
-			TileEntity other = worldObj.getTileEntity(pos.offset(dir));
+			TileEntity other = getWorld().getTileEntity(pos.offset(dir));
 			if (other instanceof TileMovingBase) {
 				AxisAlignedBB[] bbs1 = ((TileMovingBase) other).collisions;
 				for (AxisAlignedBB bb1 : bbs1) {

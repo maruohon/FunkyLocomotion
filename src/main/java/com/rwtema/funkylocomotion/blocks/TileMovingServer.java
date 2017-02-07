@@ -69,7 +69,7 @@ public class TileMovingServer extends TileMovingBase {
 	public void update() {
 		if (time < maxTime) {
 			super.update();
-			this.worldObj.markChunkDirty(pos, this);
+			this.getWorld().markChunkDirty(pos, this);
 		} else {
 			MoverEventHandler.registerFinisher();
 //			MoveManager.finishMoving();

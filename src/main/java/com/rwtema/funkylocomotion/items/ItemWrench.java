@@ -1,11 +1,14 @@
 package com.rwtema.funkylocomotion.items;
 
+import java.util.List;
+import javax.annotation.Nonnull;
 import com.rwtema.funkylocomotion.FunkyLocomotion;
 import com.rwtema.funkylocomotion.blocks.BlockStickyFrame;
 import com.rwtema.funkylocomotion.movers.IMover;
 import com.rwtema.funkylocomotion.movers.MoverEventHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -16,7 +19,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -24,9 +26,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nonnull;
-import java.util.List;
 
 public class ItemWrench extends Item {
 	public static final int metaWrenchNormal = 0;
@@ -45,10 +44,9 @@ public class ItemWrench extends Item {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(@Nonnull Item item, CreativeTabs tab, List list) {
+	public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
 		list.add(new ItemStack(item, 1, 0));
 		list.add(new ItemStack(item, 1, 1));
 		list.add(new ItemStack(item, 1, 2));
@@ -62,9 +60,9 @@ public class ItemWrench extends Item {
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 		if (stack.getItemDamage() == metaWrenchEye)
-			tooltip.add(I18n.translateToLocal("tooltip.funkylocomotion:wrench_eye"));
+			tooltip.add(I18n.format("tooltip.funkylocomotion:wrench_eye"));
 		else if (stack.getItemDamage() == metaWrenchHammer)
-			tooltip.add(I18n.translateToLocal("tooltip.funkylocomotion:wrench_hammer"));
+			tooltip.add(I18n.format("tooltip.funkylocomotion:wrench_hammer"));
 	}
 
 	@Nonnull
@@ -89,7 +87,7 @@ public class ItemWrench extends Item {
 			return EnumActionResult.PASS;
 
 		if (block instanceof BlockStickyFrame) {
-			state = block.getActualState(state, world, pos);
+			state = state.getActualState(world, pos);
 			boolean isOpen = state.getValue(BlockStickyFrame.DIR_OPEN_MAP.get(side));
 
 			Block otherBlock;
@@ -134,7 +132,7 @@ public class ItemWrench extends Item {
 		if (!blockingBlock.isAir(blockingState, world, blockingPos)) {
 			if (blockingState.getCollisionBoundingBox(world, blockingPos) != null && blockingBlock.canCollideCheck(blockingState, false)) {
 				int face = side.ordinal();
-				if (blockingBlock.collisionRayTrace(blockingState, world, blockingPos,
+				if (blockingState.collisionRayTrace(world, blockingPos,
 						new Vec3d(
 								blockingPos.getX() + (face == 4 ? -0.1 : face == 5 ? 1.1 : hitX),
 								blockingPos.getY() + (face == 0 ? -0.1 : face == 1 ? 1.1 : hitY),
@@ -156,8 +154,8 @@ public class ItemWrench extends Item {
 
 	@Override
 	public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, EntityPlayer player) {
-		if (!player.worldObj.isRemote) {
-			TileEntity tileEntity = player.worldObj.getTileEntity(pos);
+		if (!player.getEntityWorld().isRemote) {
+			TileEntity tileEntity = player.getEntityWorld().getTileEntity(pos);
 			if (tileEntity instanceof IMover) {
 				MoverEventHandler.registerMover((IMover) tileEntity);
 			}

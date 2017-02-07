@@ -1,24 +1,29 @@
 package com.rwtema.funkylocomotion.rendering;
 
+import org.lwjgl.opengl.GL11;
 import com.rwtema.funkylocomotion.blocks.TileMovingClient;
 import com.rwtema.funkylocomotion.fakes.FakeWorldClient;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
-import org.lwjgl.opengl.GL11;
 
 public class TESRMoving extends TileEntitySpecialRenderer<TileMovingClient> {
 	private BlockRendererDispatcher blockRenderer;
@@ -53,7 +58,6 @@ public class TESRMoving extends TileEntitySpecialRenderer<TileMovingClient> {
 	@Override
 	public void renderTileEntityFast(TileMovingClient te, double x, double y, double z, float partialTicks, int destroyStage, VertexBuffer renderer) {
 		if (blockRenderer == null) blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
-		BlockPos pos1 = te.getPos();
 
 		if (!te.init)
 			return;
@@ -75,7 +79,7 @@ public class TESRMoving extends TileEntitySpecialRenderer<TileMovingClient> {
 
 		int pass = MinecraftForgeClient.getRenderPass();
 		if (te.render && te.getState().getRenderType() != EnumBlockRenderType.INVISIBLE) {
-			GL11.glPushMatrix();
+			GlStateManager.pushMatrix();
 			renderer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 			setupTranslations(x, y, z, te, h, dir, renderer);
 			flag = renderStatic(te, pass, renderer);
@@ -97,8 +101,8 @@ public class TESRMoving extends TileEntitySpecialRenderer<TileMovingClient> {
 
 			}
 			tessellator.draw();
-			GL11.glPopMatrix();
-			GL11.glEnable(GL11.GL_CULL_FACE);
+			GlStateManager.popMatrix();
+			GlStateManager.enableCull();
 		}
 
 		flag = flag | renderDynamic(x, y, z, partialTicks, te, h, dir, pass, renderer);
@@ -124,22 +128,22 @@ public class TESRMoving extends TileEntitySpecialRenderer<TileMovingClient> {
 		}
 		fakeWorldClient.dir_id = mover.dir;
 
-		TileEntitySpecialRenderer specialRenderer = TileEntityRendererDispatcher.instance.getSpecialRenderer(mover.tile);
+		TileEntitySpecialRenderer<TileEntity> specialRenderer = TileEntityRendererDispatcher.instance.getSpecialRenderer(mover.tile);
 		if (specialRenderer == null)
 			return false;
 
 		if (!mover.tile.shouldRenderInPass(pass)) return false;
 
-		GL11.glPushMatrix();
+		GlStateManager.pushMatrix();
 		setupTranslations(x, y, z, mover, h, dir, renderer);
 		try {
-			WorldClient prevWorld1 = Minecraft.getMinecraft().theWorld;
-			World prevWorld2 = Minecraft.getMinecraft().thePlayer.worldObj;
-			World prevWorld3 = rendererDispatcher.worldObj;
+			WorldClient prevWorld1 = Minecraft.getMinecraft().world;
+			World prevWorld2 = Minecraft.getMinecraft().player.world;
+			World prevWorld3 = rendererDispatcher.world;
 			try {
-				Minecraft.getMinecraft().theWorld = fakeWorldClient;
-				Minecraft.getMinecraft().thePlayer.worldObj = fakeWorldClient;
-				TileEntityRendererDispatcher.instance.worldObj = fakeWorldClient;
+				Minecraft.getMinecraft().world = fakeWorldClient;
+				Minecraft.getMinecraft().player.world = fakeWorldClient;
+				TileEntityRendererDispatcher.instance.world = fakeWorldClient;
 				renderer.setTranslation(0, 0, 0);
 				mover.tile.updateContainingBlockInfo();
 				RenderHelper.enableStandardItemLighting();
@@ -147,9 +151,9 @@ public class TESRMoving extends TileEntitySpecialRenderer<TileMovingClient> {
 				RenderHelper.disableStandardItemLighting();
 				renderer.setTranslation(0, 0, 0);
 			} finally {
-				Minecraft.getMinecraft().theWorld = prevWorld1;
-				Minecraft.getMinecraft().thePlayer.worldObj = prevWorld2;
-				TileEntityRendererDispatcher.instance.worldObj = prevWorld3;
+				Minecraft.getMinecraft().world = prevWorld1;
+				Minecraft.getMinecraft().player.world = prevWorld2;
+				TileEntityRendererDispatcher.instance.world = prevWorld3;
 			}
 		} catch (Exception e) {
 			FLRenderHelper.clearTessellator();
@@ -168,7 +172,7 @@ public class TESRMoving extends TileEntitySpecialRenderer<TileMovingClient> {
 			mover.render = false;
 		}
 
-		GL11.glPopMatrix();
+		GlStateManager.popMatrix();
 		return true;
 	}
 
@@ -177,7 +181,7 @@ public class TESRMoving extends TileEntitySpecialRenderer<TileMovingClient> {
 		if (dir < 6) {
 			EnumFacing dir1 = EnumFacing.values()[dir];
 			renderer.setTranslation(0, 0, 0);
-			GL11.glTranslated((x - pos.getX() + dir1.getFrontOffsetX() * h),
+			GlStateManager.translate((x - pos.getX() + dir1.getFrontOffsetX() * h),
 					(y - pos.getY() + dir1.getFrontOffsetY() * h),
 					(z - pos.getZ() + dir1.getFrontOffsetZ() * h));
 //			renderer.setTranslation(
@@ -186,12 +190,12 @@ public class TESRMoving extends TileEntitySpecialRenderer<TileMovingClient> {
 //					z - pos.getZ() + dir1.getFrontOffsetZ() * h);
 		} else {
 			renderer.setTranslation(0, 0, 0);
-			GL11.glTranslated(x, y, z);
-			GL11.glTranslated(0.5, 0.5, 0.5);
+			GlStateManager.translate(x, y, z);
+			GlStateManager.translate(0.5, 0.5, 0.5);
 			double dh = dir == 6 ? h + 1 : -h;
-			GL11.glScaled(dh, dh, dh);
-			GL11.glTranslated(-0.5, -0.5, -0.5);
-			GL11.glTranslated(-pos.getX(), -pos.getY(), -pos.getZ());
+			GlStateManager.scale(dh, dh, dh);
+			GlStateManager.translate(-0.5, -0.5, -0.5);
+			GlStateManager.translate(-pos.getX(), -pos.getY(), -pos.getZ());
 		}
 	}
 

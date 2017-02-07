@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ObstructionHelper {
 	@SideOnly(Side.CLIENT)
 	public static boolean shouldRenderParticles() {
-		return playerHoldingWrench(Minecraft.getMinecraft().thePlayer);
+		return playerHoldingWrench(Minecraft.getMinecraft().player);
 	}
 
 	private static boolean playerHoldingWrench(EntityPlayer thePlayer) {
@@ -35,7 +35,7 @@ public class ObstructionHelper {
 		PlayerChunkMapEntry chunkWatcher = FLNetwork.getChunkWatcher(world, pos);
 		if (chunkWatcher == null) return false;
 
-		Packet packet = null;
+		Packet<?> packet = null;
 
 		for (EntityPlayerMP player : chunkWatcher.players) {
 			if (playerHoldingWrench(player)) {

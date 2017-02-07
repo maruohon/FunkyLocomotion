@@ -223,7 +223,7 @@ public class FakeWorldClient extends WorldClient {
 	}
 
 	@Override
-	public boolean spawnEntityInWorld(@Nonnull Entity entity) {
+	public boolean spawnEntity(@Nonnull Entity entity) {
 		return false;
 	}
 

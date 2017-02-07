@@ -202,7 +202,7 @@ public class TilePusher extends TilePowered implements IMover, ITickable {
 		EnumFacing dir = d2.getOpposite();
 		boolean push = meta < 6;
 
-		List<BlockPos> posList = getBlocks(worldObj, pos, dir, push);
+		List<BlockPos> posList = getBlocks(getWorld(), pos, dir, push);
 		if (posList != null) {
 			final int energy = posList.size() * powerPerTile;
 			if (this.energy.extractEnergy(energy, true) != energy)
@@ -212,12 +212,12 @@ public class TilePusher extends TilePowered implements IMover, ITickable {
 			for (EnumFacing d : EnumFacing.values()) {
 				if (d != dir) {
 					BlockPos p = pos.offset(d);
-					IBlockState state = worldObj.getBlockState(p);
+					IBlockState state = getWorld().getBlockState(p);
 					if (state.getBlock() == FunkyLocomotion.booster) {
 						if (state.getValue(BlockDirectional.FACING) != d.getOpposite())
 							continue;
 
-						TileEntity tile = BlockHelper.getTile(worldObj, p);
+						TileEntity tile = BlockHelper.getTile(getWorld(), p);
 						if (tile instanceof TileBooster) {
 							TileBooster booster = (TileBooster) tile;
 							if (booster.energy.extractEnergy(energy, true) != energy)
@@ -237,13 +237,13 @@ public class TilePusher extends TilePowered implements IMover, ITickable {
 
 			this.energy.extractEnergy(energy, false);
 
-			MoveManager.startMoving(worldObj, posList, getDirection(), moveTime[boosters.size()]);
+			MoveManager.startMoving(getWorld(), posList, getDirection(), moveTime[boosters.size()]);
 		}
 	}
 
 	@Override
 	public boolean stillExists() {
-		return !tileEntityInvalid && worldObj != null && worldObj.isBlockLoaded(pos) && worldObj.getTileEntity(pos) == this;
+		return !tileEntityInvalid && getWorld() != null && getWorld().isBlockLoaded(pos) && getWorld().getTileEntity(pos) == this;
 	}
 
 	@Override
