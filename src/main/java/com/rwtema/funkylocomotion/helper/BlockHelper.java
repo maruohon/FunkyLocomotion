@@ -1,5 +1,8 @@
 package com.rwtema.funkylocomotion.helper;
 
+import java.lang.invoke.MethodHandle;
+import java.lang.reflect.Field;
+import javax.annotation.Nullable;
 import com.mojang.authlib.GameProfile;
 import com.rwtema.funkylocomotion.api.FunkyCapabilities;
 import com.rwtema.funkylocomotion.api.IMoveCheck;
@@ -17,10 +20,15 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
-
-import javax.annotation.Nullable;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class BlockHelper {
+	private static final MethodHandle methodHandle_Chunk_relightBlock =
+			MethodHandleUtils.getMethodHandleVirtual(Chunk.class, new String[] { "func_76615_h", "relightBlock" }, int.class, int.class, int.class);
+	private static final MethodHandle methodHandle_Chunk_propagateSkylightOcclusion =
+			MethodHandleUtils.getMethodHandleVirtual(Chunk.class, new String[] { "func_76595_e", "propagateSkylightOcclusion" }, int.class, int.class);
+	private static final Field field_Chunk_precipitationHeightMap = ReflectionHelper.findField(Chunk.class, "field_76638_b", "precipitationHeightMap");
+
 	@SuppressWarnings("deprecation")
 	public static boolean silentSetBlock(Chunk chunk, BlockPos pos, Block block, int meta) {
 		int dx = pos.getX() & 15;
@@ -29,8 +37,18 @@ public class BlockHelper {
 
 		int i1 = dz << 4 | dx;
 
-		if (y >= chunk.precipitationHeightMap[i1] - 1) {
-			chunk.precipitationHeightMap[i1] = -999;
+		try
+		{
+			int[] precMap = (int[]) field_Chunk_precipitationHeightMap.get(chunk);
+			if (y >= precMap[i1] - 1) {
+				precMap[i1] = -999;
+			}
+		//if (y >= chunk.precipitationHeightMap[i1] - 1) {
+		//	chunk.precipitationHeightMap[i1] = -999;
+		//}
+		}
+		catch (Exception e)
+		{
 		}
 
 		IBlockState state1 = chunk.getBlockState(dx, y, dz);
@@ -67,8 +85,18 @@ public class BlockHelper {
 
 		Chunk chunk = world.getChunkFromBlockCoords(pos);
 
-		if (pos.getY() >= chunk.precipitationHeightMap[i1] - 1) {
-			chunk.precipitationHeightMap[i1] = -999;
+		try
+		{
+			int[] precMap = (int[]) field_Chunk_precipitationHeightMap.get(chunk);
+			if (pos.getY() >= precMap[i1] - 1) {
+				precMap[i1] = -999;
+			}
+		//if (pos.getY() >= chunk.precipitationHeightMap[i1] - 1) {
+		//	chunk.precipitationHeightMap[i1] = -999;
+		//}
+		}
+		catch (Exception e)
+		{
 		}
 
 		int j1 = chunk.getHeightMap()[i1];
@@ -82,18 +110,26 @@ public class BlockHelper {
 		} else {
 			int j2 = newBlock.getLightOpacity(newState, world, pos);
 
+			try
+			{
 			if (j2 > 0) {
 				if (pos.getY() >= j1) {
-					chunk.relightBlock(pos.getX() & 15, pos.getY() + 1, pos.getZ() & 15);
+					methodHandle_Chunk_relightBlock.invokeExact(chunk, pos.getX() & 15, pos.getY() + 1, pos.getZ() & 15);
+					//chunk.relightBlock(pos.getX() & 15, pos.getY() + 1, pos.getZ() & 15);
 				}
 			} else if (pos.getY() == j1 - 1) {
-
-				chunk.relightBlock(pos.getX() & 15, pos.getY(), pos.getZ() & 15);
+				methodHandle_Chunk_relightBlock.invokeExact(chunk, pos.getX() & 15, pos.getY(), pos.getZ() & 15);
+				//chunk.relightBlock(pos.getX() & 15, pos.getY(), pos.getZ() & 15);
 			}
 
 
 			if (j2 != k2 && (j2 < k2 || chunk.getLightFor(EnumSkyBlock.SKY, pos) > 0 || chunk.getLightFor(EnumSkyBlock.BLOCK, pos) > 0)) {
-				chunk.propagateSkylightOcclusion(pos.getX() & 15, pos.getZ() & 15);
+				methodHandle_Chunk_propagateSkylightOcclusion.invokeExact(chunk, pos.getX() & 15, pos.getZ() & 15);
+				//chunk.propagateSkylightOcclusion(pos.getX() & 15, pos.getZ() & 15);
+			}
+			}
+			catch (Throwable t)
+			{
 			}
 		}
 

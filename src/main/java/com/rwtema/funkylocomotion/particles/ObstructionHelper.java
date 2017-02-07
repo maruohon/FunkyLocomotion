@@ -1,5 +1,7 @@
 package com.rwtema.funkylocomotion.particles;
 
+import java.lang.reflect.Field;
+import java.util.List;
 import com.rwtema.funkylocomotion.FunkyLocomotion;
 import com.rwtema.funkylocomotion.items.ItemWrench;
 import com.rwtema.funkylocomotion.network.FLNetwork;
@@ -13,10 +15,13 @@ import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ObstructionHelper {
+	private static final Field field_PlayerChunkMapEntry_players = ReflectionHelper.findField(PlayerChunkMapEntry.class, "field_187283_c", "players");
+
 	@SideOnly(Side.CLIENT)
 	public static boolean shouldRenderParticles() {
 		return playerHoldingWrench(Minecraft.getMinecraft().player);
@@ -31,13 +36,25 @@ public class ObstructionHelper {
 				heldItem.getItem() == FunkyLocomotion.wrench && heldItem.getItemDamage() == ItemWrench.metaWrenchEye;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static boolean sendObstructionPacket(World world, BlockPos pos, EnumFacing dir) {
 		PlayerChunkMapEntry chunkWatcher = FLNetwork.getChunkWatcher(world, pos);
 		if (chunkWatcher == null) return false;
 
 		Packet<?> packet = null;
 
-		for (EntityPlayerMP player : chunkWatcher.players) {
+		List<EntityPlayerMP> players;
+		try
+		{
+			players = (List<EntityPlayerMP>) field_PlayerChunkMapEntry_players.get(chunkWatcher);
+		}
+		catch (IllegalArgumentException | IllegalAccessException e)
+		{
+			return false;
+		}
+
+		//for (EntityPlayerMP player : chunkWatcher.players) {
+		for (EntityPlayerMP player : players) {
 			if (playerHoldingWrench(player)) {
 				if (packet == null) packet = FLNetwork.net.getPacketFrom(new MessageObstruction(pos, dir));
 				player.connection.sendPacket(packet);
