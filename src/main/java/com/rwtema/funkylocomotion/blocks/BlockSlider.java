@@ -72,7 +72,7 @@ public class BlockSlider extends BlockPusher {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (worldIn.isRemote) {
-			return true;
+			return false;
 		}
 		ItemStack item = playerIn.getHeldItem(hand);
 		if (!(ItemHelper.isWrench(item)))
@@ -84,6 +84,7 @@ public class BlockSlider extends BlockPusher {
 			if (tile != null && tile.getClass() == TileSlider.class) {
 				((TileSlider) tile).rotateAboutAxis();
 				BlockHelper.markBlockForUpdate(worldIn, pos);
+				return true;
 			}
 		} else {
 			if (side.ordinal() == meta)
@@ -95,8 +96,9 @@ public class BlockSlider extends BlockPusher {
 				((TileSlider) tile).getSlideDir();
 				BlockHelper.markBlockForUpdate(worldIn, pos);
 			}
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	@Nonnull

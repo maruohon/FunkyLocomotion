@@ -1,5 +1,7 @@
 package com.rwtema.funkylocomotion.blocks;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.rwtema.funkylocomotion.FunkyLocomotion;
 import com.rwtema.funkylocomotion.helper.ItemHelper;
 import com.rwtema.funkylocomotion.movers.IMover;
@@ -17,9 +19,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class BlockBooster extends Block {
 	public BlockBooster() {
@@ -44,8 +43,9 @@ public class BlockBooster extends Block {
 				side = face.getOpposite();
 
 			worldIn.setBlockState(pos, state.withProperty(BlockDirectional.FACING, side), 3);
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	@Nonnull

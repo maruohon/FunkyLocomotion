@@ -161,14 +161,15 @@ public class BlockMoving extends Block {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (worldIn.isRemote)
-			return true;
+			return false;
 
 		TileEntity tile = worldIn.getTileEntity(pos);
 		if (tile instanceof TileMovingServer) {
 			((TileMovingServer) tile).cacheActivate(playerIn, side, hand, hitX, hitY, hitZ);
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override

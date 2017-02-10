@@ -5,6 +5,7 @@ import com.rwtema.funkylocomotion.api.ISlipperyBlock;
 import com.rwtema.funkylocomotion.helper.ItemHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -34,13 +35,14 @@ public class BlockPusher extends BlockFLMultiState implements ISlipperyBlock {
 		super(Material.ROCK);
 		this.setCreativeTab(FunkyLocomotion.creativeTabFrames);
 		this.setHardness(1);
+		this.setSoundType(SoundType.STONE);
 	}
 
 	@Nonnull
 	@Override
 	public IBlockState getStateForPlacement(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ, int meta, @Nonnull EntityLivingBase placer, ItemStack stack) {
-		return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, stack)
-				.withProperty(BlockDirectional.FACING, EnumFacing.UP);
+		IBlockState state = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, stack);
+		return state.withProperty(BlockDirectional.FACING, facing.getOpposite());
 	}
 
 	@Override
@@ -80,8 +82,9 @@ public class BlockPusher extends BlockFLMultiState implements ISlipperyBlock {
 				side = face.getOpposite();
 
 			worldIn.setBlockState(pos, state.withProperty(BlockDirectional.FACING, side), 3);
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	@Override

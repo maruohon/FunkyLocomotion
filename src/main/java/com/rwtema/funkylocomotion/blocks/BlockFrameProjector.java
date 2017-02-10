@@ -90,6 +90,7 @@ public class BlockFrameProjector extends BlockFLMultiState {
 						projector.range = 1;
 					}
 					BlockHelper.markBlockForUpdate(worldIn, pos);
+					return true;
 				}
 			} else {
 				IBlockState blockState = worldIn.getBlockState(pos);
@@ -105,9 +106,10 @@ public class BlockFrameProjector extends BlockFLMultiState {
 					projector.facing = side;
 					BlockHelper.markBlockForUpdate(worldIn, pos);
 				}
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	@Override
