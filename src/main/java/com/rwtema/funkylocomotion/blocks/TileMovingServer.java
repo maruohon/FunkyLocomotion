@@ -25,7 +25,23 @@ public class TileMovingServer extends TileMovingBase {
 	@Override
 	@Nonnull
 	public NBTTagCompound getUpdateTag() {
-		return this.writeToNBT(new NBTTagCompound());
+		if (this.desc == null)
+			return super.getUpdateTag();
+
+		this.desc.setInteger("Time", this.time);
+		this.desc.setInteger("MaxTime", this.maxTime);
+		this.desc.setByte("Dir", (byte) this.dir);
+
+		if (this.block != null)
+			this.desc.setTag("BlockTag", this.block);
+		if (this.collisions.length > 0)
+			this.desc.setTag("Collisions", TagsAxis(this.collisions));
+		if (this.lightLevel != 0)
+			this.desc.setByte("Light", (byte) this.lightLevel);
+		if (this.lightOpacity != 0)
+			this.desc.setShort("Opacity", (short) this.lightOpacity);
+
+		return this.desc;
 	}
 
 	@Override
