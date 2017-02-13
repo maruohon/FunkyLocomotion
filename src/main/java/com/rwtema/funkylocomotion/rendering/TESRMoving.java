@@ -38,7 +38,7 @@ public class TESRMoving extends TileEntitySpecialRenderer<TileMovingClient> {
 		RenderHelper.disableStandardItemLighting();
 		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GlStateManager.enableBlend();
-		GlStateManager.disableCull();
+		GlStateManager.enableCull();
 
 		if (Minecraft.isAmbientOcclusionEnabled()) {
 			GlStateManager.shadeModel(GL11.GL_SMOOTH);
@@ -46,10 +46,8 @@ public class TESRMoving extends TileEntitySpecialRenderer<TileMovingClient> {
 			GlStateManager.shadeModel(GL11.GL_FLAT);
 		}
 
-
 		renderTileEntityFast(te, x, y, z, partialTicks, destroyStage, renderer);
 		renderer.setTranslation(0, 0, 0);
-
 
 		RenderHelper.enableStandardItemLighting();
 	}
@@ -73,7 +71,7 @@ public class TESRMoving extends TileEntitySpecialRenderer<TileMovingClient> {
 		if (dir == -1) {
 			return;
 		}
-//
+
 		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		boolean flag = false;
 
