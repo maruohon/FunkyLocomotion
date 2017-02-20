@@ -277,11 +277,13 @@ public class TilePusher extends TilePowered implements IMover, ITickable {
 
 	@Override
 	public void update() {
-		if (cooldown > 0) {
-			cooldown--;
-		}
-		if (cooldown == 0) {
-			MoverEventHandler.registerMover(this);
+		if (! this.getWorld().isRemote) {
+			if (cooldown > 0) {
+				cooldown--;
+			}
+			if (cooldown == 0) {
+				MoverEventHandler.registerMover(this);
+			}
 		}
 	}
 
