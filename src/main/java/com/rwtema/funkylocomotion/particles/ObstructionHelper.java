@@ -32,7 +32,7 @@ public class ObstructionHelper {
 	}
 
 	private static boolean isEyeWrench(ItemStack heldItem) {
-		return heldItem != null &&
+		return heldItem.isEmpty() == false &&
 				heldItem.getItem() == FunkyLocomotion.wrench && heldItem.getItemDamage() == ItemWrench.metaWrenchEye;
 	}
 

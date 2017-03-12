@@ -139,7 +139,7 @@ public class MoveManager {
 				e.lightlevel = state.getLightValue(srcWorld, srcPos);
 
 				List<AxisAlignedBB> axes = new ArrayList<>();
-				state.addCollisionBoxToList(srcWorld, srcPos, TileEntity.INFINITE_EXTENT_AABB, axes, null);
+				state.addCollisionBoxToList(srcWorld, srcPos, TileEntity.INFINITE_EXTENT_AABB, axes, null, false);
 
 				if (axes.size() > 0) {
 					e.bb = new ArrayList<>();
@@ -479,7 +479,6 @@ public class MoveManager {
 								state,
 								player,
 								tile.activatingHand,
-								player.getHeldItem(tile.activatingHand),
 								tile.activatingSide,
 								tile.activatingHitX, tile.activatingHitY, tile.activatingHitZ);
 					}

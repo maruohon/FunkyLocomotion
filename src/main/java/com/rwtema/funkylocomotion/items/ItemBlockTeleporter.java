@@ -16,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
@@ -57,13 +58,14 @@ public class ItemBlockTeleporter extends ItemBlock {
 	}
 
 	@Override
-	public void getSubItems(@Nonnull Item item, @Nonnull CreativeTabs tab, @Nonnull List<ItemStack> list) {
+	public void getSubItems(@Nonnull Item item, @Nonnull CreativeTabs tab, NonNullList<ItemStack> list) {
 		list.add((new ItemStack(item, 1, 0)));
 	}
 
 	@Nonnull
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, @Nonnull EntityPlayer playerIn, World worldIn, @Nonnull BlockPos pos, EnumHand hand, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(@Nonnull EntityPlayer playerIn, World worldIn, @Nonnull BlockPos pos, EnumHand hand, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ) {
+		ItemStack stack = playerIn.getHeldItem(hand);
 		NBTTagCompound tag = stack.getTagCompound();
 		if (tag == null || tag.getInteger(NBT_TELEPORTER_ID) == 0) {
 			if (worldIn.isRemote) {
@@ -72,7 +74,7 @@ public class ItemBlockTeleporter extends ItemBlock {
 			}
 			return EnumActionResult.FAIL;
 		}
-		return super.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+		return super.onItemUse(playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 	}
 
 	@Override

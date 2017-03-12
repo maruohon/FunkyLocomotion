@@ -60,6 +60,6 @@ public class ItemBlockFrame extends ItemBlockMetadata {
 			}
 		}
 
-		list.addAll(Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(s, 60));
+		list.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(s, 60));
 	}
 }

@@ -137,9 +137,13 @@ public class BlockHelper {
 		markBlockForUpdate(world, pos);
 
 		if (!world.isRemote) {
-			world.notifyBlockOfStateChange(pos, Blocks.AIR);
-			world.notifyBlockOfStateChange(pos, newBlock);
-			world.notifyNeighborsOfStateChange(pos, newBlock);
+			// TODO: Is this correct in 1.11?
+			world.neighborChanged(pos, Blocks.AIR, pos);
+			world.neighborChanged(pos, newBlock, pos);
+			// It used to be this in 1.10:
+			//world.notifyBlockOfStateChange(pos, Blocks.AIR);
+			//world.notifyBlockOfStateChange(pos, newBlock);
+			world.notifyNeighborsOfStateChange(pos, newBlock, false);
 
 			if (newState.hasComparatorInputOverride()) {
 				world.updateComparatorOutputLevel(pos, newBlock);

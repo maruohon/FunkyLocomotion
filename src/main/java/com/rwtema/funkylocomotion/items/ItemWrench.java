@@ -17,6 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
@@ -46,7 +47,7 @@ public class ItemWrench extends Item {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
+	public void getSubItems(@Nonnull Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
 		list.add(new ItemStack(item, 1, 0));
 		list.add(new ItemStack(item, 1, 1));
 		list.add(new ItemStack(item, 1, 2));
@@ -67,7 +68,8 @@ public class ItemWrench extends Item {
 
 	@Nonnull
 	@Override
-	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+		ItemStack stack = player.getHeldItem(hand);
 		if (stack.getItemDamage() != metaWrenchHammer)
 			return EnumActionResult.PASS;
 
@@ -94,7 +96,7 @@ public class ItemWrench extends Item {
 
 			for (BlockPos.MutableBlockPos otherPos : BlockPos.getAllInBoxMutable(pos.offset(d1, -2).offset(d2, -2), pos.offset(d1, 2).offset(d2, 2))) {
 				if (otherPos.equals(pos)) {
-					block.onBlockActivated(world, pos, state, player, hand, player.getHeldItem(hand), side, hitX, hitY, hitZ);
+					block.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
 				} else {
 					IBlockState otherBlockState = world.getBlockState(otherPos);
 					otherBlock = otherBlockState.getBlock();
@@ -103,7 +105,7 @@ public class ItemWrench extends Item {
 						if (isInaccessible(world, side, hitX, hitY, hitZ, blockingPos)) continue;
 
 
-						otherBlock.onBlockActivated(world, otherPos, otherBlockState, player, hand, player.getHeldItem(hand), side, hitX, hitY, hitZ);
+						otherBlock.onBlockActivated(world, otherPos, otherBlockState, player, hand, side, hitX, hitY, hitZ);
 					}
 				}
 			}
@@ -119,7 +121,7 @@ public class ItemWrench extends Item {
 				BlockPos blockingPos = otherPos.offset(side.getOpposite());
 				if (!pos.equals(otherPos) && isInaccessible(world, side, hitX, hitY, hitZ, blockingPos)) continue;
 
-				otherBlock.onBlockActivated(world, otherPos, otherBlockState, player, hand, player.getHeldItem(hand), side, hitX, hitY, hitZ);
+				otherBlock.onBlockActivated(world, otherPos, otherBlockState, player, hand, side, hitX, hitY, hitZ);
 			}
 
 		}
@@ -177,7 +179,7 @@ public class ItemWrench extends Item {
 	@SubscribeEvent
 	public void leftClick(PlayerInteractEvent.LeftClickBlock event) {
 		ItemStack heldItem = event.getEntityPlayer().getHeldItem(event.getHand());
-		if (heldItem == null || heldItem.getItem() != this)
+		if (heldItem.isEmpty() || heldItem.getItem() != this)
 			return;
 		if (!event.getWorld().isRemote) {
 			TileEntity tileEntity = event.getWorld().getTileEntity(event.getPos());
