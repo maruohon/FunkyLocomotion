@@ -59,9 +59,9 @@ public class BlockSlider extends BlockPusher {
 		if (state.getBlock() != this) return state;
 		EnumFacing facing = state.getValue(BlockDirectional.FACING);
 
-		TileEntity tile = worldIn.getTileEntity(pos);
-		if (tile instanceof TileSlider) {
-			EnumFacing slideDir = ((TileSlider) tile).getSlideDir();
+		TileSlider tile = BlockHelper.getTileEntitySafely(worldIn, pos, TileSlider.class);
+		if (tile != null) {
+			EnumFacing slideDir = tile.getSlideDir();
 			init();
 			int value = map[facing.ordinal()][slideDir.ordinal()];
 
