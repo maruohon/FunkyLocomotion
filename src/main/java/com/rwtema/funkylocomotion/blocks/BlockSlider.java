@@ -50,6 +50,11 @@ public class BlockSlider extends BlockPusher {
 		};
 	}
 
+	@Override
+	public int damageDropped(IBlockState state) {
+		return 0;
+	}
+
 	@Nonnull
 	@Override
 	public IBlockState getActualState(@Nonnull IBlockState state, IBlockAccess worldIn, BlockPos pos) {
