@@ -1,5 +1,8 @@
 package com.rwtema.funkylocomotion.blocks;
 
+import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.rwtema.funkylocomotion.helper.BlockHelper;
 import com.rwtema.funkylocomotion.helper.ItemHelper;
 import net.minecraft.block.BlockDirectional;
@@ -16,10 +19,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
 
 public class BlockSlider extends BlockPusher {
 	public static final PropertyInteger SUB_ROTATION = PropertyInteger.create("sub_rot", 0, 3);
@@ -61,9 +60,9 @@ public class BlockSlider extends BlockPusher {
 		if (state.getBlock() != this) return state;
 		EnumFacing facing = state.getValue(BlockDirectional.FACING);
 
-		TileEntity tile = worldIn.getTileEntity(pos);
-		if (tile instanceof TileSlider) {
-			EnumFacing slideDir = ((TileSlider) tile).getSlideDir();
+		TileSlider tile = BlockHelper.getTileEntitySafely(worldIn, pos, TileSlider.class);
+		if (tile != null) {
+			EnumFacing slideDir = tile.getSlideDir();
 			init();
 			int value = map[facing.ordinal()][slideDir.ordinal()];
 

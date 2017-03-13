@@ -16,7 +16,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ChunkCache;
 import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
@@ -217,5 +219,25 @@ public class BlockHelper {
 	public static void markBlockForUpdate(World world, BlockPos pos) {
 		IBlockState state = world.getBlockState(pos);
 		world.notifyBlockUpdate(pos, state, state, 0);
+	}
+
+	@Nullable
+	public static <T extends TileEntity> T getTileEntitySafely(IBlockAccess world, BlockPos pos, Class<T> tileClass) {
+		TileEntity te;
+
+		if (world instanceof ChunkCache) {
+			ChunkCache chunkCache = (ChunkCache) world;
+			te = chunkCache.getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK);
+		}
+		else {
+			te = world.getTileEntity(pos);
+		}
+
+		if (tileClass.isInstance(te)) {
+			return tileClass.cast(te);
+		}
+		else {
+			return null;
+		}
 	}
 }
