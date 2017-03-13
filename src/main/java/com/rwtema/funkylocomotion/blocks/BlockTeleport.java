@@ -27,6 +27,11 @@ public class BlockTeleport extends BlockPusher {
 	}
 
 	@Override
+	public int damageDropped(IBlockState state) {
+		return 0;
+	}
+
+	@Override
 	public void getSubBlocks(@Nonnull Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
 		list.add(new ItemStack(itemIn, 1, 0));
 	}
