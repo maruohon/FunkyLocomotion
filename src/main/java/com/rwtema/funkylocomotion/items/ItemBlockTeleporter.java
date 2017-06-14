@@ -3,13 +3,14 @@ package com.rwtema.funkylocomotion.items;
 import java.util.List;
 import java.util.Random;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.rwtema.funkylocomotion.rendering.WordDictionary;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -58,8 +59,8 @@ public class ItemBlockTeleporter extends ItemBlock {
 	}
 
 	@Override
-	public void getSubItems(@Nonnull Item item, @Nonnull CreativeTabs tab, NonNullList<ItemStack> list) {
-		list.add((new ItemStack(item, 1, 0)));
+	public void getSubItems(@Nonnull CreativeTabs tab, NonNullList<ItemStack> list) {
+		list.add((new ItemStack(this, 1, 0)));
 	}
 
 	@Nonnull
@@ -79,8 +80,8 @@ public class ItemBlockTeleporter extends ItemBlock {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(@Nonnull ItemStack item, @Nonnull EntityPlayer player, @Nonnull List<String> list, boolean debug) {
-		super.addInformation(item, player, list, debug);
+	public void addInformation(@Nonnull ItemStack item, @Nullable World world, @Nonnull List<String> list, ITooltipFlag advanced) {
+		super.addInformation(item, world, list, advanced);
 
 		NBTTagCompound tagCompound = item.getTagCompound();
 		if (tagCompound == null || !tagCompound.hasKey(NBT_TELEPORTER_ID)) {

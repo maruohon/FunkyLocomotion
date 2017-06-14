@@ -2,7 +2,7 @@ package com.rwtema.funkylocomotion.rendering;
 
 import com.rwtema.funkylocomotion.blocks.TileMovingClient;
 import com.rwtema.funkylocomotion.fakes.FakeWorldClient;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -83,7 +83,7 @@ public class TileEntityRenderMoving extends FastTESR<TileMovingClient> {
 	}
 
 	@Override
-	public void renderTileEntityFast(TileMovingClient te, double x, double y, double z, float partialTicks, int destroyStage, VertexBuffer VertexBuffer) {
+	public void renderTileEntityFast(TileMovingClient te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder VertexBuffer) {
 
 	}
 //

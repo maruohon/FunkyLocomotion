@@ -22,6 +22,7 @@ public class Recipes {
 	public static boolean shouldAddFrameCopyResetRecipes;
 
 	public static void addRecipes() {
+	    /* FIXME/TODO 1.12 update
 		for (String s : OreDictionary.getOreNames()) {
 			if (s.startsWith("ingot"))
 				LogHelper.info(s);
@@ -97,8 +98,10 @@ public class Recipes {
 
 			GameRegistry.addRecipe(t);
 		}
+		*/
 	}
 
+	/* FIXME/TODO 1.12 update
 	public static Object getOreWithVanillaFallback(Object vanillaFallback, String... moddedOre) {
 		for (String modOre : moddedOre) {
 			if (OreDictionary.getOres(modOre).size() > 0)
@@ -111,4 +114,5 @@ public class Recipes {
 		GameRegistry.addRecipe(recipe);
 		RecipeSorter.register("funky:recipe:" + recipe.getClass().getName(), recipe.getClass(), SHAPELESS, "");
 	}
+	*/
 }
