@@ -8,7 +8,6 @@ import com.rwtema.funkylocomotion.rendering.WordDictionary;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
@@ -17,7 +16,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
@@ -56,11 +54,6 @@ public class ItemBlockTeleporter extends ItemBlock {
 			tag.removeTag(NBT_TELEPORTER_ID);
 			if (tag.hasNoTags()) item.setTagCompound(null);
 		}
-	}
-
-	@Override
-	public void getSubItems(@Nonnull CreativeTabs tab, NonNullList<ItemStack> list) {
-		list.add((new ItemStack(this, 1, 0)));
 	}
 
 	@Nonnull

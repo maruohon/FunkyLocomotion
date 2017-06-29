@@ -48,11 +48,12 @@ public class ItemWrench extends Item {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
-		list.add(new ItemStack(this, 1, 0));
-		list.add(new ItemStack(this, 1, 1));
-		list.add(new ItemStack(this, 1, 2));
+		if (this.isInCreativeTab(tab)) {
+			list.add(new ItemStack(this, 1, 0));
+			list.add(new ItemStack(this, 1, 1));
+			list.add(new ItemStack(this, 1, 2));
+		}
 	}
 
 	@Override
@@ -60,6 +61,7 @@ public class ItemWrench extends Item {
 		return true;
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World world, @Nonnull List<String> list, ITooltipFlag advanced) {
 		if (stack.getItemDamage() == metaWrenchEye)
