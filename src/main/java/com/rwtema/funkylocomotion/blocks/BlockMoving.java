@@ -143,7 +143,7 @@ public class BlockMoving extends Block {
 	}
 
 	@Override
-	public BlockFaceShape func_193383_a(IBlockAccess blockAccess, IBlockState stateIn, BlockPos pos, EnumFacing side) {
+	public BlockFaceShape getBlockFaceShape(IBlockAccess blockAccess, IBlockState stateIn, BlockPos pos, EnumFacing side) {
 		return BlockFaceShape.UNDEFINED;
 	}
 

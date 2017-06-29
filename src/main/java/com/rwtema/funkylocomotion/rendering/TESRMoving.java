@@ -31,7 +31,7 @@ public class TESRMoving extends TileEntitySpecialRenderer<TileMovingClient> {
 	public static final TESRMoving INSTANCE = new TESRMoving();
 
 	@Override
-	public final void func_192841_a(TileMovingClient te, double x, double y, double z, float partialTicks, int destroyStage, float partial) {
+	public final void renderTileEntityAt(TileMovingClient te, double x, double y, double z, float partialTicks, int destroyStage, float partial) {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder renderer = tessellator.getBuffer();
 		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
@@ -145,7 +145,7 @@ public class TESRMoving extends TileEntitySpecialRenderer<TileMovingClient> {
 				renderer.setTranslation(0, 0, 0);
 				mover.tile.updateContainingBlockInfo();
 				RenderHelper.enableStandardItemLighting();
-				specialRenderer.func_192841_a(mover.tile, mover.getPos().getX(), mover.getPos().getY(), mover.getPos().getZ(), f, -1, partial);
+				specialRenderer.renderTileEntityAt(mover.tile, mover.getPos().getX(), mover.getPos().getY(), mover.getPos().getZ(), f, -1, partial);
 				RenderHelper.disableStandardItemLighting();
 				renderer.setTranslation(0, 0, 0);
 			} finally {

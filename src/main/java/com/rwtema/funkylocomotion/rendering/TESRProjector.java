@@ -23,7 +23,7 @@ public class TESRProjector extends TileEntitySpecialRenderer<TileFrameProjector>
 	}
 
 	@Override
-	public final void func_192841_a(TileFrameProjector te, double x, double y, double z, float partialTicks, int destroyStage, float partial) {
+	public final void renderTileEntityAt(TileFrameProjector te, double x, double y, double z, float partialTicks, int destroyStage, float partial) {
 		if (!te.powered) return;
 		float r = te.range;
 		if (r <= 0) return;
