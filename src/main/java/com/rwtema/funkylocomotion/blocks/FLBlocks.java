@@ -48,6 +48,7 @@ public class FLBlocks
 
 		GameRegistry.registerTileEntity(TileBooster.class,			"funkylocomotion:tile_booster");
 		GameRegistry.registerTileEntity(TileFrameProjector.class,	"funkylocomotion:tile_frame_projector");
+		GameRegistry.registerTileEntity(TileMovingClient.class,		"funkylocomotion:tile_mover_client");
 		GameRegistry.registerTileEntity(TileMovingServer.class,		"funkylocomotion:tile_mover");
 		GameRegistry.registerTileEntity(TilePusher.class,			"funkylocomotion:tile_pusher");
 		GameRegistry.registerTileEntity(TileSlider.class,			"funkylocomotion:tile_slider");

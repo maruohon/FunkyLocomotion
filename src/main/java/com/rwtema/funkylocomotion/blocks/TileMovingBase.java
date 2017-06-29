@@ -33,7 +33,7 @@ public abstract class TileMovingBase extends TileEntity implements ITickable {
 	public NBTTagCompound desc;
 	public int dir = -1;
 	public int lightLevel = 0;
-	public int lightOpacity = 255;
+	public int lightOpacity = 0;
 	public int scheduledTickTime = -1;
 	public int scheduledTickPriority;
 

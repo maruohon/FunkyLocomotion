@@ -31,6 +31,7 @@ public class BlockMoving extends Block {
 
 	public BlockMoving() {
 		super(Material.ROCK);
+		this.setLightOpacity(0);
 		this.setBlockUnbreakable();
 		this.setRegistryName("funkylocomotion:moving");
 		instance = this;
