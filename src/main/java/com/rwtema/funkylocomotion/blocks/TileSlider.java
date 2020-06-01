@@ -71,7 +71,9 @@ public class TileSlider extends TilePusher {
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		super.writeToNBT(tag);
-		tag.setByte("SlideDirection", (byte) slideDir.ordinal());
+		if (this.slideDir != null) {
+			tag.setByte("SlideDirection", (byte) slideDir.ordinal());
+		}
 		return tag;
 	}
 
