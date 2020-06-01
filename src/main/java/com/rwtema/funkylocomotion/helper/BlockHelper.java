@@ -1,5 +1,8 @@
 package com.rwtema.funkylocomotion.helper;
 
+import java.lang.invoke.MethodHandle;
+import java.lang.reflect.Field;
+import javax.annotation.Nullable;
 import com.mojang.authlib.GameProfile;
 import com.rwtema.funkylocomotion.api.FunkyCapabilities;
 import com.rwtema.funkylocomotion.api.IMoveCheck;
@@ -19,18 +22,14 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
-
-import javax.annotation.Nullable;
-import java.lang.invoke.MethodHandle;
-import java.lang.reflect.Field;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class BlockHelper {
 	private static final MethodHandle methodHandle_Chunk_relightBlock =
 			MethodHandleUtils.getMethodHandleVirtual(Chunk.class, new String[]{"func_76615_h", "relightBlock"}, int.class, int.class, int.class);
 	private static final MethodHandle methodHandle_Chunk_propagateSkylightOcclusion =
 			MethodHandleUtils.getMethodHandleVirtual(Chunk.class, new String[]{"func_76595_e", "propagateSkylightOcclusion"}, int.class, int.class);
-	private static final Field field_Chunk_precipitationHeightMap = ReflectionHelper.findField(Chunk.class, "field_76638_b", "precipitationHeightMap");
+	private static final Field field_Chunk_precipitationHeightMap = ObfuscationReflectionHelper.findField(Chunk.class, "field_76638_b"); // precipitationHeightMap
 
 	@SuppressWarnings("deprecation")
 	public static boolean silentSetBlock(Chunk chunk, BlockPos pos, Block block, int meta) {

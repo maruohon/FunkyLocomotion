@@ -13,6 +13,7 @@ import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -21,7 +22,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 public class ObstructionHelper {
-	private static final Field field_PlayerChunkMapEntry_players = ReflectionHelper.findField(PlayerChunkMapEntry.class, "field_187283_c", "players");
+	private static final Field field_PlayerChunkMapEntry_players = ObfuscationReflectionHelper.findField(PlayerChunkMapEntry.class, "field_187283_c"); // players
 
 	@SideOnly(Side.CLIENT)
 	public static boolean shouldRenderParticles() {

@@ -31,8 +31,8 @@ public class WordDictionary implements ISelectiveResourceReloadListener {
 	public static String[] getWords() {
 		if (words != null) return words;
 
-		LanguageMap translator = ObfuscationReflectionHelper.getPrivateValue(LanguageMap.class, null, "field_74817_a", "instance");
-		Map<String, String> languageList = ObfuscationReflectionHelper.getPrivateValue(LanguageMap.class, translator, "field_74816_c", "languageList");
+		LanguageMap translator = ObfuscationReflectionHelper.getPrivateValue(LanguageMap.class, null, "field_74817_a"); // instance
+		Map<String, String> languageList = ObfuscationReflectionHelper.getPrivateValue(LanguageMap.class, translator, "field_74816_c"); // languageList
 
 		HashSet<String> wordSet = new HashSet<>();
 
