@@ -17,7 +17,7 @@ public abstract class Describer {
 		updateTag.removeTag("x");
 		updateTag.removeTag("y");
 		updateTag.removeTag("z");
-		if (!updateTag.hasNoTags()) {
+		if (!updateTag.isEmpty()) {
 			descriptor.setTag("Tile", updateTag);
 		}
 	}

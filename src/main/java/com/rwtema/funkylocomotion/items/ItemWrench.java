@@ -43,7 +43,7 @@ public class ItemWrench extends Item {
 		super();
 		this.setMaxStackSize(1);
 		this.setRegistryName("funkylocomotion:wrench");
-		this.setUnlocalizedName("funkylocomotion:wrench");
+		this.setTranslationKey("funkylocomotion:wrench");
 		this.setCreativeTab(FunkyLocomotion.creativeTabFrames);
 		this.setHasSubtypes(true);
 		MinecraftForge.EVENT_BUS.register(this);
@@ -171,13 +171,13 @@ public class ItemWrench extends Item {
 
 	@Nonnull
 	@Override
-	public String getUnlocalizedName(ItemStack itemstack) {
+	public String getTranslationKey(ItemStack itemstack) {
 		if (itemstack.getItemDamage() == metaWrenchEye)
 			return "item.funkylocomotion:wrench_eye";
 		else if (itemstack.getItemDamage() == metaWrenchHammer)
 			return "item.funkylocomotion:wrench_hammer";
 		else
-			return super.getUnlocalizedName(itemstack);
+			return super.getTranslationKey(itemstack);
 	}
 
 	@SubscribeEvent

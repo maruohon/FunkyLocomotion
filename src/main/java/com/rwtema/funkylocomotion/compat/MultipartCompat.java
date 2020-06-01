@@ -71,7 +71,7 @@ public class MultipartCompat extends CompatHandler {
 				Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(MultipartMod.modID(), "multipart_block"));
 
 				// Set the block at the given position to the multipart block
-				Chunk chunk = world.getChunkFromBlockCoords(pos);
+				Chunk chunk = world.getChunk(pos);
 				BlockHelper.silentSetBlock(chunk, pos, block, 0);
 				// Extract the multiparts from the NBT data
 				TileMultipart multipart = TileMultipart.createFromNBT(tag);

@@ -93,7 +93,7 @@ public abstract class TileMovingBase extends TileEntity implements ITickable {
 		maxTime = tag.getInteger("MaxTime");
 		dir = tag.getByte("Dir");
 
-		isAir = block.hasNoTags();
+		isAir = block.isEmpty();
 
 		if (tag.hasKey("Collisions", 10))
 			collisions = AxisTags(tag.getTagList("Collisions", 10));
@@ -147,7 +147,7 @@ public abstract class TileMovingBase extends TileEntity implements ITickable {
 			return Vec3d.ZERO;
 
 		EnumFacing dir = EnumFacing.values()[this.dir];
-		return new Vec3d(dir.getFrontOffsetX() * d, dir.getFrontOffsetY() * d, dir.getFrontOffsetZ() * d);
+		return new Vec3d(dir.getXOffset() * d, dir.getYOffset() * d, dir.getZOffset() * d);
 	}
 
 	@Override
@@ -212,9 +212,9 @@ public abstract class TileMovingBase extends TileEntity implements ITickable {
 				AxisAlignedBB[] bbs1 = ((TileMovingBase) other).collisions;
 				for (AxisAlignedBB bb1 : bbs1) {
 					if (bb == null)
-						bb = bb1.offset(dir.getFrontOffsetX(), dir.getFrontOffsetY(), dir.getFrontOffsetZ());
+						bb = bb1.offset(dir.getXOffset(), dir.getYOffset(), dir.getZOffset());
 					else
-						bb = bb.union(bb1.offset(dir.getFrontOffsetX(), dir.getFrontOffsetY(), dir.getFrontOffsetZ()));
+						bb = bb.union(bb1.offset(dir.getXOffset(), dir.getYOffset(), dir.getZOffset()));
 				}
 			}
 		}
@@ -224,7 +224,7 @@ public abstract class TileMovingBase extends TileEntity implements ITickable {
 
 		double h = offset(renderOffset);
 		if (dir != null) {
-			bb = bb.offset(h * dir.getFrontOffsetX(), h * dir.getFrontOffsetY(), h * dir.getFrontOffsetZ());
+			bb = bb.offset(h * dir.getXOffset(), h * dir.getYOffset(), h * dir.getZOffset());
 		} else if (shrink) {
 			double mult = this.dir == 6 ? h + 1 : -h;
 			bb = new AxisAlignedBB(
@@ -245,7 +245,7 @@ public abstract class TileMovingBase extends TileEntity implements ITickable {
 		if (dir != null && h != 0) {
 			AxisAlignedBB[] tbbs = new AxisAlignedBB[collisions.length];
 			for (int i = 0; i < collisions.length; i++) {
-				tbbs[i] = collisions[i].offset(h * dir.getFrontOffsetX(), h * dir.getFrontOffsetY(), h * dir.getFrontOffsetZ()).offset(pos);
+				tbbs[i] = collisions[i].offset(h * dir.getXOffset(), h * dir.getYOffset(), h * dir.getZOffset()).offset(pos);
 			}
 			return tbbs;
 		} else {

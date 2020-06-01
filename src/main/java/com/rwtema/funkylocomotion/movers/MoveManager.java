@@ -165,7 +165,7 @@ public class MoveManager {
 
 				e.description = descriptor;
 
-				srcChunks.add(srcWorld.getChunkFromBlockCoords(srcPos));
+				srcChunks.add(srcWorld.getChunk(srcPos));
 
 				dstTileEntries.put(dstPos, e);
 			}
@@ -234,7 +234,7 @@ public class MoveManager {
 				vars.put("Iterator", link);
 				BlockPos dstPos = link.dstPos;
 				BlockPos srcPos = link.srcPos;
-				BlockHelper.silentClear(dstWorld.getChunkFromBlockCoords(dstPos), dstPos);
+				BlockHelper.silentClear(dstWorld.getChunk(dstPos), dstPos);
 //				if (dir != null)
 				FLNetwork.sendToAllWatchingChunk(srcWorld, srcPos, new MessageClearTile(srcPos));
 				dstWorld.removeTileEntity(dstPos);
@@ -400,7 +400,7 @@ public class MoveManager {
 				vars.put("tile", tile);
 				World worldObj = tile.getWorld();
 				BlockPos pos = tile.getPos();
-				chunks.add(worldObj.getChunkFromBlockCoords(pos));
+				chunks.add(worldObj.getChunk(pos));
 				worldObj.setBlockState(pos, BlockStates.AIR, 0);
 				worldObj.setBlockState(pos, BlockStates.STONE, 0);
 			}
@@ -412,7 +412,7 @@ public class MoveManager {
 				BlockPos pos = tile.getPos();
 				vars.put("tile", tile);
 				if (tile.block != null) {
-					BlockHelper.silentClear(tile.getWorld().getChunkFromBlockCoords(pos), pos);
+					BlockHelper.silentClear(tile.getWorld().getChunk(pos), pos);
 					Block block = Block.getBlockFromName(tile.block.getString("Block"));
 					vars.put("block", block);
 					if (block == null) block = Blocks.AIR;

@@ -49,9 +49,9 @@ public class TESRProjector extends TileEntitySpecialRenderer<TileFrameProjector>
 		double ay = pos.getY() + 0.5;
 		double az = pos.getZ() + 0.5;
 
-		double bx = ax + facing.getFrontOffsetX() * r;
-		double by = ay + facing.getFrontOffsetY() * r;
-		double bz = az + facing.getFrontOffsetZ() * r;
+		double bx = ax + facing.getXOffset() * r;
+		double by = ay + facing.getYOffset() * r;
+		double bz = az + facing.getZOffset() * r;
 
 //		double cx = pos.getX() + 0.5 + 0.5 * facing.getFrontOffsetX();
 //		double cy = pos.getY() + 0.5 + 0.5 * facing.getFrontOffsetY();

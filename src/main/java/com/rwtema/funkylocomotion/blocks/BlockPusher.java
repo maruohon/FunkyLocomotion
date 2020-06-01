@@ -105,7 +105,7 @@ public class BlockPusher extends BlockFLMultiState implements ISlipperyBlock {
 			return;
 		}
 
-		tilePush.powered = world.isBlockIndirectlyGettingPowered(pos) > 0;
+		tilePush.powered = world.getRedstonePowerFromNeighbors(pos) > 0;
 
 		if (tilePush.powered) {
 			tilePush.startCooldown();

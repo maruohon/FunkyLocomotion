@@ -26,7 +26,7 @@ public class DefaultMoveFactory implements IMoveFactory {
 
 	@Override
 	public NBTTagCompound destroyBlock(World world, BlockPos pos) {
-		Chunk chunk = world.getChunkFromBlockCoords(pos);
+		Chunk chunk = world.getChunk(pos);
 		IBlockState state = chunk.getBlockState(pos);
 
 		Block b = state.getBlock();
@@ -70,7 +70,7 @@ public class DefaultMoveFactory implements IMoveFactory {
 
 		int meta = tag.getByte("Meta");
 
-		Chunk chunk = world.getChunkFromBlockCoords(pos);
+		Chunk chunk = world.getChunk(pos);
 
 		BlockHelper.silentSetBlock(chunk, pos, block, meta);
 

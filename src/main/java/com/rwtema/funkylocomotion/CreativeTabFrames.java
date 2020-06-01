@@ -15,7 +15,7 @@ public class CreativeTabFrames extends CreativeTabs {
 
 	@Nonnull
 	@Override
-	public ItemStack getTabIconItem() {
+	public ItemStack createIcon() {
 		return new ItemStack(Validate.notNull(Item.getItemFromBlock(FLBlocks.PUSHER)));
 	}
 }

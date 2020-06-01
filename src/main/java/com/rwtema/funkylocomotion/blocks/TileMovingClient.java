@@ -148,7 +148,7 @@ public class TileMovingClient extends TileMovingBase {
 
 		double h = offset(true);
 		EnumFacing d = getDir();
-		return h != 0 && d != null ? other.offset(h * d.getFrontOffsetX(), h * d.getFrontOffsetY(), h * d.getFrontOffsetZ()) : other;
+		return h != 0 && d != null ? other.offset(h * d.getXOffset(), h * d.getYOffset(), h * d.getZOffset()) : other;
 	}
 
 	@Override

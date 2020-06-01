@@ -23,7 +23,7 @@ public class BlockTeleport extends BlockPusher {
 	public BlockTeleport() {
 		super();
 		this.setRegistryName("funkylocomotion:teleporter");
-		this.setUnlocalizedName("funkylocomotion:teleporter");
+		this.setTranslationKey("funkylocomotion:teleporter");
 	}
 
 	@Override

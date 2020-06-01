@@ -47,7 +47,7 @@ public class FLBlocks {
 		registry.register(new BlockBooster());
 		registry.register(new BlockFrameProjector());
 		registry.register(new BlockMoving());
-		registry.register((new BlockPusher()).setUnlocalizedName("funkylocomotion:pusher").setRegistryName("funkylocomotion:pusher"));
+		registry.register((new BlockPusher()).setTranslationKey("funkylocomotion:pusher").setRegistryName("funkylocomotion:pusher"));
 		registry.register(new BlockSlider());
 		registry.register(new BlockTeleport());
 		registry.register(new BlockMassFrameEdge());

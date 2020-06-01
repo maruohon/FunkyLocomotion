@@ -43,7 +43,7 @@ public class BlockStickyFrame extends BlockFrame {
 		super();
 		index = curLoadingIndex;
 		blocks[index] = this;
-		this.setUnlocalizedName("funkylocomotion:frame");
+		this.setTranslationKey("funkylocomotion:frame");
 		this.setRegistryName("funkylocomotion:frame_" + index);
 		if (index == 0)
 			this.setCreativeTab(FunkyLocomotion.creativeTabFrames);
@@ -81,7 +81,7 @@ public class BlockStickyFrame extends BlockFrame {
 
 	@Nonnull
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
 

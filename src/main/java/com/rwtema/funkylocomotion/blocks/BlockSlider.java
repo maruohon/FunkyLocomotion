@@ -27,7 +27,7 @@ public class BlockSlider extends BlockPusher {
 	public BlockSlider() {
 		super();
 		init();
-		this.setUnlocalizedName("funkylocomotion:slider");
+		this.setTranslationKey("funkylocomotion:slider");
 		this.setRegistryName("funkylocomotion:slider");
 	}
 

@@ -69,7 +69,7 @@ public class OffsetBlockAccess implements IBlockAccess {
 	}
 
 	public OffsetBlockAccess setOffset(EnumFacing dir) {
-		return setOffset(dir.getFrontOffsetX(), dir.getFrontOffsetY(), dir.getFrontOffsetZ());
+		return setOffset(dir.getXOffset(), dir.getYOffset(), dir.getZOffset());
 	}
 
 	public OffsetBlockAccess setOffset(int x, int y, int z) {

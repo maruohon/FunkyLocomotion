@@ -25,7 +25,7 @@ public class BlockFrameProjector extends BlockFLMultiState {
 	public BlockFrameProjector() {
 		super(Material.ROCK);
 		this.setRegistryName("funkylocomotion:frame_projector");
-		this.setUnlocalizedName("funkylocomotion:frame_projector");
+		this.setTranslationKey("funkylocomotion:frame_projector");
 		this.setCreativeTab(FunkyLocomotion.creativeTabFrames);
 		this.setHardness(1);
 	}
@@ -126,7 +126,7 @@ public class BlockFrameProjector extends BlockFLMultiState {
 			return;
 		}
 		boolean prevPowered = tileFrameProjector.powered;
-		tileFrameProjector.powered = world.isBlockIndirectlyGettingPowered(pos) == 0;
+		tileFrameProjector.powered = world.getRedstonePowerFromNeighbors(pos) == 0;
 		if (prevPowered != tileFrameProjector.powered) {
 			BlockHelper.markBlockForUpdate(world, pos);
 		}

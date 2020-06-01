@@ -107,8 +107,8 @@ public class FakeWorldClient extends WorldClient {
 
 	@Nonnull
 	@Override
-	public Chunk getChunkFromChunkCoords(int x, int z) {
-		return world.getChunkFromChunkCoords(x, z);
+	public Chunk getChunk(int x, int z) {
+		return world.getChunk(x, z);
 	}
 
 	@SuppressWarnings("ConstantConditions")
@@ -241,17 +241,17 @@ public class FakeWorldClient extends WorldClient {
 
 	private double getZOffset() {
 		if (dir == null) return 0;
-		return offset * this.dir.getFrontOffsetZ();
+		return offset * this.dir.getXOffset();
 	}
 
 	private double getYOffset() {
 		if (dir == null) return 0;
-		return offset * this.dir.getFrontOffsetY();
+		return offset * this.dir.getYOffset();
 	}
 
 	private double getXOffset() {
 		if (dir == null) return 0;
-		return offset * this.dir.getFrontOffsetX();
+		return offset * this.dir.getZOffset();
 	}
 
 	@Override

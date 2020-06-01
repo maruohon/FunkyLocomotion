@@ -38,7 +38,7 @@ public class BlockMassFrameCorner extends BlockFLMultiState {
 	public BlockMassFrameCorner() {
 		super(Material.ROCK);
 		setRegistryName("funkylocomotion:mass_frame_corner");
-		setUnlocalizedName("funkylocomotion:mass_frame_corner");
+		setTranslationKey("funkylocomotion:mass_frame_corner");
 	}
 
 	public static boolean checkEdgeFrame(World worldIn, @Nullable EntityPlayer playerIn, int x0, int y0, int z0, int x1, int y1, int z1) {

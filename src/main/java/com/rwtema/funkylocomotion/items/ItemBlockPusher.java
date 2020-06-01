@@ -18,7 +18,7 @@ public class ItemBlockPusher extends ItemBlockMetadata {
 
 	@Nonnull
 	@Override
-	public String getUnlocalizedName(ItemStack itemstack) {
-		return super.getUnlocalizedName(itemstack) + "." + getMetadata(itemstack.getItemDamage());
+	public String getTranslationKey(ItemStack itemstack) {
+		return super.getTranslationKey(itemstack) + "." + getMetadata(itemstack.getItemDamage());
 	}
 }

@@ -24,7 +24,7 @@ public class BlockBooster extends Block {
 	public BlockBooster() {
 		super(Material.ROCK);
 		this.setRegistryName("funkylocomotion:booster");
-		this.setUnlocalizedName("funkylocomotion:booster");
+		this.setTranslationKey("funkylocomotion:booster");
 		this.setCreativeTab(FunkyLocomotion.creativeTabFrames);
 		this.setHardness(1);
 	}

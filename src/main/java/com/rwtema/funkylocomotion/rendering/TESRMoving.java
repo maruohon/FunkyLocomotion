@@ -81,9 +81,9 @@ public class TESRMoving extends TileEntitySpecialRenderer<TileMovingClient> {
 				if (dir < 6) {
 					EnumFacing dir1 = EnumFacing.values()[dir];
 					renderer.sortVertexData(
-							-(float) (x - pos.getX() + dir1.getFrontOffsetX() * h),
-							-(float) (y - pos.getY() + dir1.getFrontOffsetY() * h),
-							-(float) (z - pos.getZ() + dir1.getFrontOffsetZ() * h));
+							-(float) (x - pos.getX() + dir1.getXOffset() * h),
+							-(float) (y - pos.getY() + dir1.getYOffset() * h),
+							-(float) (z - pos.getZ() + dir1.getZOffset() * h));
 				} else {
 					renderer.sortVertexData(
 							-(float) (x - pos.getX()),
@@ -174,9 +174,9 @@ public class TESRMoving extends TileEntitySpecialRenderer<TileMovingClient> {
 		if (dir < 6) {
 			EnumFacing dir1 = EnumFacing.values()[dir];
 			renderer.setTranslation(0, 0, 0);
-			GlStateManager.translate((x - pos.getX() + dir1.getFrontOffsetX() * h),
-					(y - pos.getY() + dir1.getFrontOffsetY() * h),
-					(z - pos.getZ() + dir1.getFrontOffsetZ() * h));
+			GlStateManager.translate((x - pos.getX() + dir1.getXOffset() * h),
+					(y - pos.getY() + dir1.getYOffset() * h),
+					(z - pos.getZ() + dir1.getZOffset() * h));
 //			renderer.setTranslation(
 //					x - pos.getX() + dir1.getFrontOffsetX() * h,
 //					y - pos.getY() + dir1.getFrontOffsetY() * h,

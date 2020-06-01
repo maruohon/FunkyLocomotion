@@ -53,7 +53,7 @@ public class ItemBlockTeleporter extends ItemBlock {
 
 		if (tag.hasKey(NBT_TELEPORTER_ID) && tag.getInteger(NBT_TELEPORTER_ID) == 0) {
 			tag.removeTag(NBT_TELEPORTER_ID);
-			if (tag.hasNoTags()) item.setTagCompound(null);
+			if (tag.isEmpty()) item.setTagCompound(null);
 		}
 	}
 

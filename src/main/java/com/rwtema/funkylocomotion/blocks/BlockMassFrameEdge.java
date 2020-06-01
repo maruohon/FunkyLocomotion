@@ -44,13 +44,12 @@ public class BlockMassFrameEdge extends BlockFLMultiState implements IAdvStickyB
 	public BlockMassFrameEdge() {
 		super(Material.ROCK);
 		this.setRegistryName("funkylocomotion:mass_frame_edge");
-		this.setUnlocalizedName("funkylocomotion:mass_frame_edge");
+		this.setTranslationKey("funkylocomotion:mass_frame_edge");
 	}
 
 	@SuppressWarnings("deprecation")
-	@Nonnull
 	@Override
-	public EnumPushReaction getMobilityFlag(IBlockState state) {
+	public EnumPushReaction getPushReaction(IBlockState state) {
 		return EnumPushReaction.BLOCK;
 	}
 
